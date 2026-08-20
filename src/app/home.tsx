@@ -1,4 +1,5 @@
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { router } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const discrepancyCount = 3;
@@ -54,7 +55,7 @@ export default function HomeScreen() {
       </ScrollView>
 
       <Pressable accessibilityLabel="New transaction" style={styles.fab}><PlusIcon /></Pressable>
-      <View style={styles.tabBar}><Tab type="home" label="Home" active /><Tab type="partners" label="Partners" /><Tab type="ledger" label="Ledger" /><Tab type="verify" label="Verify" /></View>
+      <View style={styles.tabBar}><Tab type="home" label="Home" active /><Tab type="partners" label="Partners" onPress={() => router.push('/partners')} /><Tab type="ledger" label="Ledger" /><Tab type="verify" label="Verify" /></View>
     </SafeAreaView>
   );
 }
@@ -66,7 +67,7 @@ function Chevron({ dark = false }: { dark?: boolean }) { return <View style={sty
 
 function BellIcon() { return <View style={styles.bell}><View style={styles.bellTop} /><View style={styles.bellBody} /><View style={styles.bellClapper} /></View>; }
 function PlusIcon() { return <View style={styles.plus}><View style={styles.plusLine} /><View style={[styles.plusLine, styles.plusVertical]} /></View>; }
-function Tab({ type, label, active = false }: { type: 'home' | 'partners' | 'ledger' | 'verify'; label: string; active?: boolean }) { return <Pressable style={styles.tab}><NativeIcon type={type} active={active} /><Text style={[styles.tabLabel, active && styles.activeLabel]}>{label}</Text></Pressable>; }
+function Tab({ type, label, active = false, onPress }: { type: 'home' | 'partners' | 'ledger' | 'verify'; label: string; active?: boolean; onPress?: () => void }) { return <Pressable onPress={onPress} style={styles.tab}><NativeIcon type={type} active={active} /><Text style={[styles.tabLabel, active && styles.activeLabel]}>{label}</Text></Pressable>; }
 function NativeIcon({ type, active }: { type: 'home' | 'partners' | 'ledger' | 'verify'; active: boolean }) {
   const color = active ? '#176B4D' : '#849089';
   if (type === 'home') return <View style={[styles.homeIcon, { borderColor: color }]}><View style={[styles.homeRoof, { borderLeftColor: 'transparent', borderRightColor: 'transparent', borderBottomColor: color }]} /><View style={[styles.homeDoor, { backgroundColor: color }]} /></View>;
